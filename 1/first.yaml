@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: first-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /first
+        pathType: Prefix
+        backend:
+          service:
+            name: first
+            port:
+              number: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: first
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+  selector:
+    app: first
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: first
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: first
+  template:
+    metadata:
+      labels:
+        app: first
+    spec:
+      containers:
+      - name: first
+        image: jimaandron/flask-hello:latest
+        env:
+        - name: MESSAGE
+          value: "This is the first service!"
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "128Mi"

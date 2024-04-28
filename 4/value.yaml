@@ -1,0 +1,14 @@
+# values.yaml
+
+# String to return
+message: "This is a third service!"
+
+# Endpoint for the service
+endpoint: "/third"
+
+# CPU and memory limits for each Pod (optional, default is no limits)
+cpuLimit: "25m"
+memoryLimit: ""
+
+# Maximum number of Deployment Pods for HorizontalPodAutoscaler (optional, default is 10)
+maxReplicas: 20
